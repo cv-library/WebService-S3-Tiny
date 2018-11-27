@@ -18,6 +18,6 @@ services:
             - xt
         depends_on:
             - minio
-        image: perl:5.26
+        image: perl:5.28
         volumes:
             - .:/root
