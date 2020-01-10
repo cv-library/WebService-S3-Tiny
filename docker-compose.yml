@@ -18,6 +18,7 @@ services:
             - xt
         depends_on:
             - minio
-        image: perl:5.28
+        image: perl:5.30
         volumes:
             - .:/root
+        working_dir: /root
