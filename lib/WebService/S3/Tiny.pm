@@ -1,4 +1,6 @@
-package WebService::S3::Tiny 0.003;
+package WebService::S3::Tiny;
+
+our $VERSION = '0.004';
 
 use strict;
 use warnings;
