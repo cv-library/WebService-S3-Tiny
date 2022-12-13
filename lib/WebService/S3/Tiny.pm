@@ -14,6 +14,12 @@ my %url_enc = map { chr, sprintf '%%%02X', $_ } 0..255;
 sub new {
     my ( $class, %args ) = @_;
 
+    # check invalid keys
+    foreach my $key (keys %args) {
+        croak "invalid key $key received."
+            unless ($key =~ /^access_key|host|region|secret_key|service|ua$/);
+    }
+
     $args{access_key} // croak '"access_key" is required';
     $args{host}       // croak '"host" is required';
     $args{region}     //= 'us-east-1';
