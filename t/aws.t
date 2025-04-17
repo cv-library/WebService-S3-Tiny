@@ -1,17 +1,14 @@
-use strict;
-use warnings;
+#!/usr/bin/env perl
 
 BEGIN { *CORE::GLOBAL::gmtime = sub(;$) { CORE::gmtime(1440938160) } }
 
+use Test2::V0;
 use HTTP::Request;
-use Test::More;
 use WebService::S3::Tiny;
 
-{
-    no warnings 'redefine';
-
-    *HTTP::Tiny::request = sub { $_[3]{headers}{authorization} };
-}
+my $mock = mock 'HTTP::Tiny' => override => [
+    request => sub { $_[3]{headers}{authorization} },
+];
 
 sub slurp($) { local ( @ARGV, $/ ) = @_; scalar <> }
 
