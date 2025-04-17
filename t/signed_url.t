@@ -1,9 +1,8 @@
-use strict;
-use warnings;
+#!/usr/bin/env perl
 
 BEGIN { *CORE::GLOBAL::gmtime =  sub(;$) { CORE::gmtime(1440938160) } }
 
-use Test::More;
+use Test2::V0;
 use WebService::S3::Tiny;
 
 my $s3 = WebService::S3::Tiny->new(
