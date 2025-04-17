@@ -33,13 +33,8 @@ for (<{get,post}-*>) {
 
     ( $path, my $query ) = split /\?/, $path;
 
-    my %query;
-
-    for ( split /&/, $query // '' ) {
-        my ( $k, $v ) = split /=/;
-
-        push @{ $query{$k} }, $v;
-    }
+    my @query = split /&/, ( $query // '' );
+    @query = map { split /=/, $_, 2 } sort @query;
 
     ( $headers, my $content ) = split /\n\n/, $headers;
 
@@ -55,7 +50,7 @@ for (<{get,post}-*>) {
         undef,
         $req->content,
         \%headers,
-        \%query,
+        \@query,
     ) => slurp "$_/$_.authz", $_;
 }
 
