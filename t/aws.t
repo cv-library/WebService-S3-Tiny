@@ -26,22 +26,18 @@ my $s3 = WebService::S3::Tiny->new(
 chdir 't/aws';
 
 for (<{get,post}-*>) {
-    utf8::decode my $foo = slurp "$_/$_.req";
+    utf8::decode my $raw = slurp "$_/$_.req";
 
-    my ( $method, $path, $headers ) =
-        $foo =~ m(^(GET|POST) (.+) HTTP/1.1\n(.+))s;
+    my ($path) = $raw =~ m{^(?:GET|POST) (.+) HTTP/1.1};
 
     ( $path, my $query ) = split /\?/, $path;
 
     my @query = split /&/, ( $query // '' );
     @query = map { split /=/, $_, 2 } sort @query;
 
-    ( $headers, my $content ) = split /\n\n/, $headers;
-
-    my $req = HTTP::Request->parse( slurp "$_/$_.req" );
+    my $req = HTTP::Request->parse($raw);
 
     my %headers = %{ $req->headers };
-
     delete $headers{'::std_case'};
 
     is +$s3->request(
