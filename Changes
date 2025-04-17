@@ -1,3 +1,6 @@
+{{$NEXT}}
+    - Make test suite pass with HTTP::Tiny v0.090
+    - Switch test suite to Test2
 0.003 2018-06-18
     - Add signed_url and related *_url method variants
 0.002 2018-05-16
