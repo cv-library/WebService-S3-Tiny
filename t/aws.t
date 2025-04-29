@@ -12,6 +12,18 @@ my $mock = mock 'HTTP::Tiny' => override => [
 
 sub slurp($) { local ( @ARGV, $/ ) = @_; scalar <> }
 
+eval {
+     WebService::S3::Tiny->new(
+        access_key => 'AKIDEXAMPLE',
+        host       => 'example.amazonaws.com',
+        region     => 'us-east-1',
+        secret_key => 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
+        service    => 'service',
+        dummy      => 1,
+     );
+};
+like($@, qr/invalid key/);
+
 my $s3 = WebService::S3::Tiny->new(
     access_key => 'AKIDEXAMPLE',
     host       => 'example.amazonaws.com',
